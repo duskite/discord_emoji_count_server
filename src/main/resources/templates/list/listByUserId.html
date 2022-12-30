@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>유저 ID   </th>
+            <th>유저 Tag  </th>
+            <th>게시글 ID (MessageId)</th>
+            <th th:text="${length}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="userClickInfo : ${userClickInfos}">
+            <td th:text="${userClickInfo.userId}"></td>
+            <td th:text="${userClickInfo.userTag}"></td>
+            <td th:text="${userClickInfo.messageId}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+

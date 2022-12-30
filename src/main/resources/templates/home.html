@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>이모지 카운팅 봇</title>
+</head>
+<body>
+    <h1>
+        이모지 카운팅 봇
+    </h1>
+    <div>
+        <a href="/allList">모든 클릭 정보</a>
+        <a href="/board">이모지 카운팅 취합</a>
+    </div>
+    <br>
+    <div>
+        <form action="/listByUserId" method="get">
+            <div class="form-group">
+                <label for="userId">유저 아이디로 검색</label>
+                <input type="text" id="userId" name="userId" placeholder="유저 아이디를 입력하세요">
+            </div>
+            <button type="submit">등록</button>
+        </form>
+        <form action="/listByMessageId" method="get">
+            <div class="form-group">
+                <label for="messageId">메세지 아이디로 검색</label>
+                <input type="text" id="messageId" name="messageId" placeholder="메세지 아이디를 입력하세요">
+            </div>
+            <button type="submit">등록</button>
+        </form>
+    </div>
+</body>
+</html>
