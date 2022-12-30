@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>모든 클릭 정보</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
-    <div>
+    <div class="container">
         <table>
             <thead>
             <tr>
                 <th>유저 ID   </th>
                 <th>유저 Tag  </th>
                 <th>게시글 ID (MessageId)</th>
+                <th>이모지 클릭 날짜</th>
             </tr>
             </thead>
             <tbody>
@@ -19,6 +21,7 @@
                 <td th:text="${userClickInfo.userId}"></td>
                 <td th:text="${userClickInfo.userTag}"></td>
                 <td th:text="${userClickInfo.messageId}"></td>
+                <td th:text="${userClickInfo.clickDate}"></td>
             </tr>
             </tbody>
         </table>

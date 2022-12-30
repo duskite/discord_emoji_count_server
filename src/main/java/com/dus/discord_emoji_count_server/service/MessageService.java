@@ -2,6 +2,7 @@ package com.dus.discord_emoji_count_server.service;
 
 import com.dus.discord_emoji_count_server.domain.MessageInfo;
 import com.dus.discord_emoji_count_server.domain.UserClickInfo;
+import com.dus.discord_emoji_count_server.domain.UserClicked;
 import com.dus.discord_emoji_count_server.domain.UserRank;
 import com.dus.discord_emoji_count_server.repository.MessageRepository;
 import org.h2.engine.User;
@@ -10,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -124,10 +127,38 @@ public class MessageService {
 
     /**
      * 클릭 정보 저장
+     * 첫 클릭일 경우는 정보 그대로 저장
+     * 중복 클릭일 경우는 최초 클릭 날짜로 지정해서 저장
      * @param userClickInfo
      */
     public void saveUserClickInfo(UserClickInfo userClickInfo){
-        messageRepository.save(userClickInfo);
+
+        LocalDate localDate = getFirstClickDate(userClickInfo);
+        if(localDate == null){
+            messageRepository.save(userClickInfo);
+        }else {
+            userClickInfo.setClickDate(localDate);
+            messageRepository.save(userClickInfo);
+        }
+
+    }
+
+    /**
+     * 유저가 이모지 클리시 최초 클릭인지 아닌지 판단
+     * 일자별로 포인트 취합하기 때문에 취소했다가 다음날 다시 중복 접수 못하도록 함
+     * @param userClickInfo
+     * @return
+     */
+    private LocalDate getFirstClickDate(UserClickInfo userClickInfo){
+        String userId = userClickInfo.getUserId();
+        String messageId = userClickInfo.getMessageId();
+
+        Optional<UserClicked> userClicked = messageRepository.findUserClicked(userId, messageId);
+        if(userClicked.isPresent()){
+            return userClicked.get().getFirstClickDate();
+        }else {
+            return null;
+        }
     }
 
     /**
@@ -163,6 +194,20 @@ public class MessageService {
      */
     public List<UserClickInfo> findUserClickInfosByMessageId(String messageId){
         return messageRepository.findUserClickInfoByMessageId(messageId);
+    }
+
+    public List<UserClickInfo> findUserClickInfosByDay(String strDate){
+
+        LocalDate clickDate = createLocalDate(strDate);
+        return messageRepository.findUserClickInfoByDay(clickDate);
+    }
+
+    private LocalDate createLocalDate(String day){
+        String[] tmp = day.split("-");
+        int[] yearMonthDay = Stream.of(tmp).mapToInt(Integer::parseInt).toArray();
+
+        LocalDate localDate = LocalDate.of(yearMonthDay[0], yearMonthDay[1], yearMonthDay[2]);
+        return localDate;
     }
 
 

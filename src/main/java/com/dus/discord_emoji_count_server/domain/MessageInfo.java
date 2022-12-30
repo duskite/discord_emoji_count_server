@@ -14,8 +14,6 @@ public class MessageInfo {
     private Long id;
     private String messageId;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
 
     public String getMessageId() {
         return messageId;
@@ -31,21 +29,5 @@ public class MessageInfo {
 
     public Long getId() {
         return id;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 }

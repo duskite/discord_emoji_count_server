@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,30 +37,34 @@ public class MessageController {
         return messageService.findMessages();
     }
 
+
     @PostMapping("/messageId")
     public void setMessage(@RequestParam(name = "messageId") String messageId){
 
         logger.info("메세지id 넘어온 값: " + messageId);
 
-        LocalDateTime startTime = LocalDateTime.now();
-        LocalDateTime endTime = startTime.plusHours(24);
-
         MessageInfo messageInfo = new MessageInfo();
         messageInfo.setMessageId(messageId);
-        messageInfo.setStartTime(startTime);
-        messageInfo.setEndTime(endTime);
 
         messageService.saveMessage(messageInfo);
     }
 
+    // 이미 한번이라도 누른적 있으면 새로 눌렀을때
+
+
     @PostMapping("/userClickInfo")
     public void setUserClickInfo(@RequestBody UserClickInfo userClickInfo){
+        userClickInfo.setClickDate(getClickTime());
         messageService.saveUserClickInfo(userClickInfo);
 
         UserRank userRank = new UserRank();
         userRank.setUserId(userClickInfo.getUserId());
         userRank.setUserTag(userClickInfo.getUserTag());
         increaseUserRank(userRank);
+    }
+
+    public LocalDate getClickTime(){
+        return LocalDate.now();
     }
 
     @DeleteMapping("/deleteUserClick/{messageId}/{userId}")

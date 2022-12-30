@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -65,6 +66,20 @@ public class HomeController {
         model.addAttribute("userRanks", userRanks);
 
         return "board/rank";
+    }
+
+    @GetMapping("/listByDay")
+    public String listByDay(@RequestParam("clickDate") String strDate, Model model){
+
+        if(strDate.equals("")){
+            return "redirect:/";
+        }
+
+        List<UserClickInfo> userClickInfos = messageService.findUserClickInfosByDay(strDate);
+        model.addAttribute("userClickInfos", userClickInfos);
+        model.addAttribute("length", userClickInfos.size());
+
+        return "list/listByDay";
     }
 
 }

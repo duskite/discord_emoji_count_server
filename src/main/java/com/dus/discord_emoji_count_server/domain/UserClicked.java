@@ -7,23 +7,14 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
-public class UserClickInfo {
+public class UserClicked {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     String userId;
-    String userTag;
     String messageId;
-
-    LocalDate clickDate;
-
-    public LocalDate getClickDate() {
-        return clickDate;
-    }
-
-    public void setClickDate(LocalDate clickDate) {
-        this.clickDate = clickDate;
-    }
+    LocalDate firstClickDate;
 
     public Long getId() {
         return id;
@@ -41,19 +32,19 @@ public class UserClickInfo {
         this.userId = userId;
     }
 
-    public String getUserTag() {
-        return userTag;
-    }
-
-    public void setUserTag(String userTag) {
-        this.userTag = userTag;
-    }
-
     public String getMessageId() {
         return messageId;
     }
 
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    public LocalDate getFirstClickDate() {
+        return firstClickDate;
+    }
+
+    public void setFirstClickDate(LocalDate firstClickDate) {
+        this.firstClickDate = firstClickDate;
     }
 }

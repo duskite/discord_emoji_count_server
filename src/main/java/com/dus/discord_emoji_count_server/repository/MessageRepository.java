@@ -2,11 +2,13 @@ package com.dus.discord_emoji_count_server.repository;
 
 import com.dus.discord_emoji_count_server.domain.MessageInfo;
 import com.dus.discord_emoji_count_server.domain.UserClickInfo;
+import com.dus.discord_emoji_count_server.domain.UserClicked;
 import com.dus.discord_emoji_count_server.domain.UserRank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +67,28 @@ public class MessageRepository {
                 .getResultList();
     }
 
+    /**
+     * 유저가 최초로 이모지 클리한 날짜 기록이 목적임
+     * @param userClicked
+     */
+    public void save(UserClicked userClicked){
+        em.persist(userClicked);
+    }
+
+    /**
+     * 유저가 최초로 클릭했던 정보 가져옴
+     * @param userId
+     * @param messageId
+     * @return
+     */
+    public Optional<UserClicked> findUserClicked(String userId, String messageId){
+        List<UserClicked> userClickeds = em.createQuery("select m from UserClicked m where m.userId=:userId and m.messageId=:messageId", UserClicked.class)
+                .setParameter("userId", userId)
+                .setParameter("messageId", messageId)
+                .getResultList();
+
+        return userClickeds.stream().findAny();
+    }
 
     /**
      * 클릭 정보 저장
@@ -117,6 +141,18 @@ public class MessageRepository {
     public List<UserClickInfo> findUserClickInfoByMessageId(String messageId){
         return em.createQuery("select m from UserClickInfo m where m.messageId=:messageId", UserClickInfo.class)
                 .setParameter("messageId", messageId)
+                .getResultList();
+    }
+
+
+    /**
+     * 날짜를 가지고 해당 날짜에 눌린 모든 클릭 정보 가져옴
+     * @param localDate
+     * @return
+     */
+    public List<UserClickInfo> findUserClickInfoByDay(LocalDate localDate){
+        return em.createQuery("select m from UserClickInfo m where m.clickDate=:localDate", UserClickInfo.class)
+                .setParameter("localDate", localDate)
                 .getResultList();
     }
 }
