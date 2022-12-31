@@ -49,18 +49,18 @@ public class MessageController {
         messageService.saveMessage(messageInfo);
     }
 
-    // 이미 한번이라도 누른적 있으면 새로 눌렀을때
-
-
     @PostMapping("/userClickInfo")
     public void setUserClickInfo(@RequestBody UserClickInfo userClickInfo){
         userClickInfo.setClickDate(getClickTime());
-        messageService.saveUserClickInfo(userClickInfo);
 
-        UserRank userRank = new UserRank();
-        userRank.setUserId(userClickInfo.getUserId());
-        userRank.setUserTag(userClickInfo.getUserTag());
-        increaseUserRank(userRank);
+        if(!messageService.isDupUserClickInfo(userClickInfo)){
+            messageService.saveUserClickInfo(userClickInfo);
+
+            UserRank userRank = new UserRank();
+            userRank.setUserId(userClickInfo.getUserId());
+            userRank.setUserTag(userClickInfo.getUserTag());
+            increaseUserRank(userRank);
+        }
     }
 
     public LocalDate getClickTime(){

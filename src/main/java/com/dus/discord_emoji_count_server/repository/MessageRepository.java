@@ -155,4 +155,13 @@ public class MessageRepository {
                 .setParameter("localDate", localDate)
                 .getResultList();
     }
+
+    public Optional<UserClickInfo> findOneUserClickInfo(String userId, String messageId){
+        List<UserClickInfo> result = em.createQuery("select m from UserClickInfo m where m.userId=:userId and m.messageId=:messageId", UserClickInfo.class)
+                .setParameter("userId", userId)
+                .setParameter("messageId", messageId)
+                .getResultList();
+
+        return result.stream().findAny();
+    }
 }
