@@ -125,6 +125,25 @@ public class MessageService {
     }
 
     /**
+     * 날짜 내림차순 정렬
+     * @param userClickInfos
+     * @return
+     */
+    public List<UserClickInfo> sortUserClickInfo(List<UserClickInfo> userClickInfos){
+        Collections.sort(userClickInfos, new Comparator<UserClickInfo>() {
+            @Override
+            public int compare(UserClickInfo o1, UserClickInfo o2) {
+                LocalDate localDate1 = o1.getClickDate();
+                LocalDate localDate2 = o2.getClickDate();
+
+                return -(localDate2.compareTo(localDate1));
+            }
+        });
+
+        return userClickInfos;
+    }
+
+    /**
      * 날짜별 유저 랭크 생성
      * @param userClickInfos
      * @return

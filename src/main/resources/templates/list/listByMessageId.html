@@ -8,31 +8,39 @@
     <!--  end  -->
 </head>
 <body>
-<!-- banner frag    -->
-<div th:replace="/fragments/banner.html :: frag_banner"></div>
-<!-- end   -->
 
 <div id="wrapper">
     <div id="main">
         <div class="inner">
-            <table>
-                <thead>
-                <tr>
-                    <th>유저 ID</th>
-                    <th>유저 Tag</th>
-                    <th>게시글 ID (MessageId)</th>
-                    <th>이모지 클릭 날짜</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="userClickInfo : ${userClickInfos}">
-                    <td th:text="${userClickInfo.userId}"></td>
-                    <td th:text="${userClickInfo.userTag}"></td>
-                    <td th:text="${userClickInfo.messageId}"></td>
-                    <td th:text="${userClickInfo.clickDate}"></td>
-                </tr>
-                </tbody>
-            </table>
+
+            <!-- header frag    -->
+            <div th:replace="/fragments/fragHeader.html :: frag_header"></div>
+            <!-- end   -->
+
+            <section>
+                <div class="posts">
+                    <article>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>유저 ID</th>
+                                <th>유저 Tag</th>
+                                <th>게시글 ID (MessageId)</th>
+                                <th>이모지 클릭 날짜</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="userClickInfo : ${userClickInfos}">
+                                <td th:text="${userClickInfo.userId}"></td>
+                                <td th:text="${userClickInfo.userTag}"></td>
+                                <td th:text="${userClickInfo.messageId}"></td>
+                                <td th:text="${userClickInfo.clickDate}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </article>
+                </div>
+            </section>
         </div>
     </div>
 </div>
