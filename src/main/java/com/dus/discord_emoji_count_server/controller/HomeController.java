@@ -65,7 +65,7 @@ public class HomeController {
         List<UserRank> userRanks = messageService.findAllUserRank();
         model.addAttribute("userRanks", userRanks);
 
-        return "board/rank";
+        return "board/totalRank";
     }
 
     @GetMapping("/listByDay")
@@ -78,6 +78,9 @@ public class HomeController {
         List<UserClickInfo> userClickInfos = messageService.findUserClickInfosByDay(strDate);
         model.addAttribute("userClickInfos", userClickInfos);
         model.addAttribute("length", userClickInfos.size());
+
+        List<UserRank> userRanks = messageService.createDayUserRank(userClickInfos);
+        model.addAttribute("userRanks", userRanks);
 
         return "list/listByDay";
     }

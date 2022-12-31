@@ -109,7 +109,7 @@ public class MessageService {
     }
 
     /**
-     * 유저 랭크 카운팅 기준으로 내림차순 정렬
+     * 토탈 유저 랭크 카운팅 기준으로 내림차순 정렬
      * @param userRanks
      * @return
      */
@@ -122,6 +122,34 @@ public class MessageService {
         });
 
         return userRanks;
+    }
+
+    /**
+     * 날짜별 유저 랭크 생성
+     * @param userClickInfos
+     * @return
+     */
+    public List<UserRank> createDayUserRank(List<UserClickInfo> userClickInfos){
+
+        Map<String, Long> map = new HashMap<>();
+        for(UserClickInfo userClickInfo: userClickInfos){
+            String userTag = userClickInfo.getUserTag();
+            Long cnt = map.getOrDefault(userTag, 0L);
+            cnt++;
+
+            map.put(userTag, cnt);
+        }
+
+        List<UserRank> userRanks = new ArrayList<>();
+        for(String tag: map.keySet()){
+            UserRank rank = new UserRank();
+            rank.setUserTag(tag);
+            rank.setClickCnt(map.get(tag));
+
+            userRanks.add(rank);
+        }
+
+        return sortUserRank(userRanks);
     }
 
 
@@ -196,6 +224,11 @@ public class MessageService {
         return messageRepository.findUserClickInfoByMessageId(messageId);
     }
 
+    /**
+     * 날짜 별로 클리 정보 모두 가져옴
+     * @param strDate
+     * @return
+     */
     public List<UserClickInfo> findUserClickInfosByDay(String strDate){
 
         LocalDate clickDate = createLocalDate(strDate);

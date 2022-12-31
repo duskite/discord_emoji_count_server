@@ -2,29 +2,56 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>날짜별</title>
-    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>날짜 별로 클릭 내역 조회</title>
+    <!-- css import   -->
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <!--  end  -->
 </head>
 <body>
-<div class="container">
-    <table>
-        <thead>
-        <tr>
-            <th>유저 ID   </th>
-            <th>유저 Tag  </th>
-            <th>게시글 ID (MessageId)</th>
-            <th>이모지 클릭 날짜</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="userClickInfo : ${userClickInfos}">
-            <td th:text="${userClickInfo.userId}"></td>
-            <td th:text="${userClickInfo.userTag}"></td>
-            <td th:text="${userClickInfo.messageId}"></td>
-            <td th:text="${userClickInfo.clickDate}"></td>
-        </tr>
-        </tbody>
-    </table>
+<!-- banner frag    -->
+<div th:replace="/fragments/banner.html :: frag_banner"></div>
+<!-- end   -->
+
+<div id="wrapper">
+    <div id="main">
+        <div class="inner">
+
+            <table>
+                <thead>
+                <tr>
+                    <th>유저 ID</th>
+                    <th>유저 Tag</th>
+                    <th>게시글 ID (MessageId)</th>
+                    <th>이모지 클릭 날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="userClickInfo : ${userClickInfos}">
+                    <td th:text="${userClickInfo.userId}"></td>
+                    <td th:text="${userClickInfo.userTag}"></td>
+                    <td th:text="${userClickInfo.messageId}"></td>
+                    <td th:text="${userClickInfo.clickDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <table>
+                <thead>
+                <tr>
+                    <th>유저 Tag</th>
+                    <th>이모지 클릭 횟수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="userRank : ${userRanks}">
+                    <td th:text="${userRank.userTag}"></td>
+                    <td th:text="${userRank.clickCnt}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

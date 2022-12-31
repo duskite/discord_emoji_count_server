@@ -2,42 +2,24 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>이모지 카운팅 봇</title>
-    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Emoji Counting Bot</title>
+    <!-- css import   -->
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <!--  end  -->
 </head>
-<body>
-<div class="container">
-    <h1>
-        이모지 카운팅 봇
-    </h1>
-    <div>
-        <a href="/allList">모든 클릭 정보</a>
-        <a href="/board">이모지 카운팅 취합</a>
-    </div>
-    <br>
-    <div>
-        <form action="/listByUserId" method="get">
-            <div class="form-group">
-                <label for="userId">유저 아이디로 검색</label>
-                <input type="text" id="userId" name="userId" placeholder="유저 아이디를 입력하세요">
-            </div>
-            <button type="submit">검색</button>
-        </form>
-        <form action="/listByMessageId" method="get">
-            <div class="form-group">
-                <label for="messageId">메세지 아이디로 검색</label>
-                <input type="text" id="messageId" name="messageId" placeholder="메세지 아이디를 입력하세요">
-            </div>
-            <button type="submit">검색</button>
-        </form>
-        <form action="/listByDay" method="get">
-            <div class="form-group">
-                <label for="clickDate">날짜별로 검색</label>
-                <input type="date" id="clickDate" name="clickDate" placeholder="날짜별">
-            </div>
-            <button type="submit">검색</button>
-        </form>
+<body class>
+<!-- banner frag    -->
+<div th:replace="/fragments/banner.html :: frag_banner"></div>
+<!-- end   -->
+
+<div id="wrapper">
+    <div id="main">
+        <div class="inner">
+
+
+        </div>
     </div>
 </div>
+
 </body>
 </html>

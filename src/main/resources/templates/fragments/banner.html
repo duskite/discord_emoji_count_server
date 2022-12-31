@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div id="sidebar" th:fragment="frag_banner">
+    <div class="inner">
+        <nav id="menu">
+            <header class="major">
+                <h2>
+                    <a href="/">
+                        Emoji Counting Bot
+                    </a>
+                </h2>
+            </header>
+            <ul>
+                <li>
+                    <a href="/allList">모든 클릭 정보</a>
+                </li>
+                <li>
+                    <a href="/board">이모지 카운팅 취합</a>
+                </li>
+                <li>
+                    <form action="/listByUserId" method="get">
+                        <div class="form-group">
+                            <label for="userId">유저 아이디로 검색</label>
+                            <input type="text" id="userId" name="userId" placeholder="유저 아이디를 입력하세요">
+                            <button type="submit">검색</button>
+                        </div>
+                    </form>
+                </li>
+                <li>
+                    <form action="/listByMessageId" method="get">
+                        <div class="form-group">
+                            <label for="messageId">메세지 아이디로 검색</label>
+                            <input type="text" id="messageId" name="messageId" placeholder="메세지 아이디를 입력하세요">
+                            <button type="submit">검색</button>
+                        </div>
+
+                    </form>
+                </li>
+                <li>
+                    <form action="/listByDay" method="get">
+                        <div class="form-group">
+                            <label for="clickDate">날짜별로 검색</label>
+                            <input type="date" id="clickDate" name="clickDate" placeholder="날짜별">
+                            <button type="submit">검색</button>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</html>
