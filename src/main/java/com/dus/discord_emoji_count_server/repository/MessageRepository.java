@@ -164,4 +164,13 @@ public class MessageRepository {
 
         return result.stream().findAny();
     }
+
+    public Optional<UserClicked> findOneUserClicked(String userId, String messageId){
+        List<UserClicked> result = em.createQuery("select m from UserClicked m where m.userId=:userId and m.messageId=:messageId", UserClicked.class)
+                .setParameter("userId", userId)
+                .setParameter("messageId", messageId)
+                .getResultList();
+
+        return result.stream().findAny();
+    }
 }

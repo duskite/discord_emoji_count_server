@@ -265,14 +265,17 @@ public class MessageService {
     /**
      * 이미 등록된 유저 클릭 정보 있는지 확인
      * @param userClickInfo
-     * @return 이미 있으면 true
+     * @return UserClicked 이미 있으면 true
      */
     public boolean isDupUserClickInfo(UserClickInfo userClickInfo){
 
-        Optional<UserClickInfo> optionalUserClickInfo = messageRepository.findOneUserClickInfo(userClickInfo.getUserId(),
-                userClickInfo.getMessageId());
+        String userId = userClickInfo.getUserId();
+        String messageId = userClickInfo.getMessageId();
 
-        if(optionalUserClickInfo.isPresent()){
+        Optional<UserClicked> optionalUserClicked = messageRepository.findOneUserClicked(userId,
+                messageId);
+
+        if(optionalUserClicked.isPresent()){
             return true;
         }else {
             return false;
