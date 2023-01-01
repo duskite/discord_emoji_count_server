@@ -63,6 +63,8 @@ public class MessageController {
             userClickInfo.setClickDate(optionalFirstClicked.get().getFirstClickDate());
         }else {
             userClickInfo.setClickDate(getClickTime());
+
+            setFirstClicked(userClickInfo);
         }
 
         messageService.saveUserClickInfo(userClickInfo);
@@ -71,6 +73,15 @@ public class MessageController {
         userRank.setUserId(userClickInfo.getUserId());
         userRank.setUserTag(userClickInfo.getUserTag());
         increaseUserRank(userRank);
+    }
+
+    public void setFirstClicked(UserClickInfo userClickInfo){
+        FirstClicked firstClicked = new FirstClicked();
+        firstClicked.setUserId(userClickInfo.getUserId());
+        firstClicked.setMessageId(userClickInfo.getMessageId());
+        firstClicked.setFirstClickDate(userClickInfo.getClickDate());
+
+        messageService.saveFirstClicked(firstClicked);
     }
 
     public LocalDate getClickTime(){

@@ -276,5 +276,13 @@ public class MessageService {
         return firstClicked;
     }
 
+    /**
+     * 첫 클릭 저장
+     * @param firstClicked
+     */
+    public void saveFirstClicked(FirstClicked firstClicked){
+        messageRepository.save(firstClicked);
+    }
+
 
 }
