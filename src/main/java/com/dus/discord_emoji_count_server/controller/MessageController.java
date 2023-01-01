@@ -1,5 +1,6 @@
 package com.dus.discord_emoji_count_server.controller;
 
+import com.dus.discord_emoji_count_server.domain.FirstClicked;
 import com.dus.discord_emoji_count_server.domain.MessageInfo;
 import com.dus.discord_emoji_count_server.domain.UserClickInfo;
 import com.dus.discord_emoji_count_server.domain.UserRank;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/message")
@@ -49,18 +51,26 @@ public class MessageController {
         messageService.saveMessage(messageInfo);
     }
 
+    /**
+     * 유저 이모지 클릭시 클릭 정보 넘어옴
+     * @param userClickInfo
+     */
     @PostMapping("/userClickInfo")
     public void setUserClickInfo(@RequestBody UserClickInfo userClickInfo){
-        userClickInfo.setClickDate(getClickTime());
 
-        if(!messageService.isDupUserClickInfo(userClickInfo)){
-            messageService.saveUserClickInfo(userClickInfo);
-
-            UserRank userRank = new UserRank();
-            userRank.setUserId(userClickInfo.getUserId());
-            userRank.setUserTag(userClickInfo.getUserTag());
-            increaseUserRank(userRank);
+        Optional<FirstClicked> optionalFirstClicked = messageService.findFirstClicked(userClickInfo);
+        if(optionalFirstClicked.isPresent()){
+            userClickInfo.setClickDate(optionalFirstClicked.get().getFirstClickDate());
+        }else {
+            userClickInfo.setClickDate(getClickTime());
         }
+
+        messageService.saveUserClickInfo(userClickInfo);
+
+        UserRank userRank = new UserRank();
+        userRank.setUserId(userClickInfo.getUserId());
+        userRank.setUserTag(userClickInfo.getUserTag());
+        increaseUserRank(userRank);
     }
 
     public LocalDate getClickTime(){

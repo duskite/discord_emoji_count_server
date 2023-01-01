@@ -2,9 +2,8 @@ package com.dus.discord_emoji_count_server.repository;
 
 import com.dus.discord_emoji_count_server.domain.MessageInfo;
 import com.dus.discord_emoji_count_server.domain.UserClickInfo;
-import com.dus.discord_emoji_count_server.domain.UserClicked;
+import com.dus.discord_emoji_count_server.domain.FirstClicked;
 import com.dus.discord_emoji_count_server.domain.UserRank;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -69,10 +68,10 @@ public class MessageRepository {
 
     /**
      * 유저가 최초로 이모지 클리한 날짜 기록이 목적임
-     * @param userClicked
+     * @param firstClicked
      */
-    public void save(UserClicked userClicked){
-        em.persist(userClicked);
+    public void save(FirstClicked firstClicked){
+        em.persist(firstClicked);
     }
 
     /**
@@ -81,13 +80,13 @@ public class MessageRepository {
      * @param messageId
      * @return
      */
-    public Optional<UserClicked> findUserClicked(String userId, String messageId){
-        List<UserClicked> userClickeds = em.createQuery("select m from UserClicked m where m.userId=:userId and m.messageId=:messageId", UserClicked.class)
+    public Optional<FirstClicked> findFirstClicked(String userId, String messageId){
+        List<FirstClicked> firstClickeds = em.createQuery("select m from FirstClicked m where m.userId=:userId and m.messageId=:messageId", FirstClicked.class)
                 .setParameter("userId", userId)
                 .setParameter("messageId", messageId)
                 .getResultList();
 
-        return userClickeds.stream().findAny();
+        return firstClickeds.stream().findAny();
     }
 
     /**
@@ -158,15 +157,6 @@ public class MessageRepository {
 
     public Optional<UserClickInfo> findOneUserClickInfo(String userId, String messageId){
         List<UserClickInfo> result = em.createQuery("select m from UserClickInfo m where m.userId=:userId and m.messageId=:messageId", UserClickInfo.class)
-                .setParameter("userId", userId)
-                .setParameter("messageId", messageId)
-                .getResultList();
-
-        return result.stream().findAny();
-    }
-
-    public Optional<UserClicked> findOneUserClicked(String userId, String messageId){
-        List<UserClicked> result = em.createQuery("select m from UserClicked m where m.userId=:userId and m.messageId=:messageId", UserClicked.class)
                 .setParameter("userId", userId)
                 .setParameter("messageId", messageId)
                 .getResultList();

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
-public class UserClicked {
+public class FirstClicked {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

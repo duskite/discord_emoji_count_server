@@ -2,10 +2,9 @@ package com.dus.discord_emoji_count_server.service;
 
 import com.dus.discord_emoji_count_server.domain.MessageInfo;
 import com.dus.discord_emoji_count_server.domain.UserClickInfo;
-import com.dus.discord_emoji_count_server.domain.UserClicked;
+import com.dus.discord_emoji_count_server.domain.FirstClicked;
 import com.dus.discord_emoji_count_server.domain.UserRank;
 import com.dus.discord_emoji_count_server.repository.MessageRepository;
-import org.h2.engine.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -200,7 +199,7 @@ public class MessageService {
         String userId = userClickInfo.getUserId();
         String messageId = userClickInfo.getMessageId();
 
-        Optional<UserClicked> userClicked = messageRepository.findUserClicked(userId, messageId);
+        Optional<FirstClicked> userClicked = messageRepository.findFirstClicked(userId, messageId);
         if(userClicked.isPresent()){
             return userClicked.get().getFirstClickDate();
         }else {
@@ -263,23 +262,18 @@ public class MessageService {
     }
 
     /**
-     * 이미 등록된 유저 클릭 정보 있는지 확인
+     * 최초 유저 클릭 가져옴
      * @param userClickInfo
-     * @return UserClicked 이미 있으면 true
+     * @return
      */
-    public boolean isDupUserClickInfo(UserClickInfo userClickInfo){
+    public Optional<FirstClicked> findFirstClicked(UserClickInfo userClickInfo){
 
         String userId = userClickInfo.getUserId();
         String messageId = userClickInfo.getMessageId();
 
-        Optional<UserClicked> optionalUserClicked = messageRepository.findOneUserClicked(userId,
-                messageId);
+        Optional<FirstClicked> firstClicked = messageRepository.findFirstClicked(userId, messageId);
 
-        if(optionalUserClicked.isPresent()){
-            return true;
-        }else {
-            return false;
-        }
+        return firstClicked;
     }
 
 
