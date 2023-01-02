@@ -204,23 +204,6 @@ public class MessageService {
         return messageRepository.findOneUserClickInfo(userId, messageId);
     }
 
-    /**
-     * 유저가 이모지 클리시 최초 클릭인지 아닌지 판단
-     * 일자별로 포인트 취합하기 때문에 취소했다가 다음날 다시 중복 접수 못하도록 함
-     * @param userClickInfo
-     * @return
-     */
-    private LocalDate getFirstClickDate(UserClickInfo userClickInfo){
-        String userId = userClickInfo.getUserId();
-        String messageId = userClickInfo.getMessageId();
-
-        Optional<FirstClicked> userClicked = messageRepository.findFirstClicked(userId, messageId);
-        if(userClicked.isPresent()){
-            return userClicked.get().getFirstClickDate();
-        }else {
-            return null;
-        }
-    }
 
     /**
      * 클릭 정보 삭제

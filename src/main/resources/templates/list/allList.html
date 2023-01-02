@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -18,6 +18,11 @@
             <!-- end   -->
 
             <section>
+                <header class="major">
+                    <p>
+                        총 클릭 개수: <span th:text="${cntClick}"></span>
+                    </p>
+                </header>
                 <div class="posts">
                     <article>
                         <table>

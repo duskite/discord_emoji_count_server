@@ -38,6 +38,7 @@ public class HomeController {
     public String allClickInfo(Model model){
         List<UserClickInfo> userClickInfos = messageService.findUserClickInfos();
         model.addAttribute("userClickInfos", userClickInfos);
+        model.addAttribute("cntClick", userClickInfos.size());
 
         return "list/allList";
     }
@@ -46,7 +47,7 @@ public class HomeController {
     public String clickInfoByUserId(@RequestParam("userId") String userId, Model model){
         List<UserClickInfo> userClickInfos = messageService.findUserClickInfosByUserId(userId);
         model.addAttribute("userClickInfos", userClickInfos);
-        model.addAttribute("length", userClickInfos.size());
+        model.addAttribute("cntClick", userClickInfos.size());
 
         return "list/listByUserId";
     }
@@ -55,10 +56,11 @@ public class HomeController {
     public String clickInfoByMessageId(@RequestParam("messageId") String messageId, Model model){
         List<UserClickInfo> userClickInfos = messageService.findUserClickInfosByMessageId(messageId);
         model.addAttribute("userClickInfos", userClickInfos);
-        model.addAttribute("length", userClickInfos.size());
+        model.addAttribute("cntClick", userClickInfos.size());
 
         List<UserRank> userRanks = messageService.createUserRankByMessageID(userClickInfos);
         model.addAttribute("userRanks", userRanks);
+        model.addAttribute("cntPeople", userRanks.size());
 
         return "list/listByMessageId";
     }
@@ -67,6 +69,7 @@ public class HomeController {
     public String rank(Model model){
         List<UserRank> userRanks = messageService.findAllUserRank();
         model.addAttribute("userRanks", userRanks);
+        model.addAttribute("cntPeople", userRanks.size());
 
         return "board/totalRank";
     }
@@ -80,10 +83,11 @@ public class HomeController {
 
         List<UserClickInfo> userClickInfos = messageService.findUserClickInfosByDay(strDate);
         model.addAttribute("userClickInfos", userClickInfos);
-        model.addAttribute("length", userClickInfos.size());
+        model.addAttribute("cntClick", userClickInfos.size());
 
         List<UserRank> userRanks = messageService.createDayUserRank(userClickInfos);
         model.addAttribute("userRanks", userRanks);
+        model.addAttribute("cntPeople", userRanks.size());
 
         return "list/listByDay";
     }
