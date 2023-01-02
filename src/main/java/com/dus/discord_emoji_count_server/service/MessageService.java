@@ -5,6 +5,7 @@ import com.dus.discord_emoji_count_server.domain.UserClickInfo;
 import com.dus.discord_emoji_count_server.domain.FirstClicked;
 import com.dus.discord_emoji_count_server.domain.UserRank;
 import com.dus.discord_emoji_count_server.repository.MessageRepository;
+import org.h2.engine.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -191,15 +192,13 @@ public class MessageService {
      * @param userClickInfo
      */
     public void saveUserClickInfo(UserClickInfo userClickInfo){
+        messageRepository.save(userClickInfo);
+    }
 
-        LocalDate localDate = getFirstClickDate(userClickInfo);
-        if(localDate == null){
-            messageRepository.save(userClickInfo);
-        }else {
-            userClickInfo.setClickDate(localDate);
-            messageRepository.save(userClickInfo);
-        }
-
+    public Optional<UserClickInfo> getUserClickInfo(UserClickInfo userClickInfo){
+        String userId = userClickInfo.getUserId();
+        String messageId = userClickInfo.getMessageId();
+        return messageRepository.findOneUserClickInfo(userId, messageId);
     }
 
     /**

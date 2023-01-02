@@ -5,6 +5,7 @@ import com.dus.discord_emoji_count_server.domain.MessageInfo;
 import com.dus.discord_emoji_count_server.domain.UserClickInfo;
 import com.dus.discord_emoji_count_server.domain.UserRank;
 import com.dus.discord_emoji_count_server.service.MessageService;
+import org.h2.engine.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
@@ -67,12 +68,17 @@ public class MessageController {
             setFirstClicked(userClickInfo);
         }
 
-        messageService.saveUserClickInfo(userClickInfo);
+        Optional<UserClickInfo> optionalUserClickInfo = messageService.getUserClickInfo(userClickInfo);
+        if(optionalUserClickInfo.isPresent()){
+            return;
+        }else {
+            messageService.saveUserClickInfo(userClickInfo);
 
-        UserRank userRank = new UserRank();
-        userRank.setUserId(userClickInfo.getUserId());
-        userRank.setUserTag(userClickInfo.getUserTag());
-        increaseUserRank(userRank);
+            UserRank userRank = new UserRank();
+            userRank.setUserId(userClickInfo.getUserId());
+            userRank.setUserTag(userClickInfo.getUserTag());
+            increaseUserRank(userRank);
+        }
     }
 
     public void setFirstClicked(UserClickInfo userClickInfo){
