@@ -187,12 +187,15 @@ public class MessageService {
 
     /**
      * 클릭 정보 저장
-     * 첫 클릭일 경우는 정보 그대로 저장
-     * 중복 클릭일 경우는 최초 클릭 날짜로 지정해서 저장
      * @param userClickInfo
      */
     public void saveUserClickInfo(UserClickInfo userClickInfo){
-        messageRepository.save(userClickInfo);
+        String userId = userClickInfo.getUserId();
+        String messageId = userClickInfo.getMessageId();
+        Optional<UserClickInfo> optionalUserClickInfo = messageRepository.findOneUserClickInfo(userId, messageId);
+        if(!optionalUserClickInfo.isPresent()){
+            messageRepository.save(userClickInfo);
+        }
     }
 
     public Optional<UserClickInfo> getUserClickInfo(UserClickInfo userClickInfo){
