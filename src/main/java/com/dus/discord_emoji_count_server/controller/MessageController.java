@@ -57,7 +57,7 @@ public class MessageController {
      * @param userClickInfo
      */
     @PostMapping("/userClickInfo")
-    public void setUserClickInfo(@RequestBody UserClickInfo userClickInfo){
+    public Boolean setUserClickInfo(@RequestBody UserClickInfo userClickInfo){
 
         Optional<FirstClicked> optionalFirstClicked = messageService.findFirstClicked(userClickInfo);
         if(optionalFirstClicked.isPresent()){
@@ -70,7 +70,7 @@ public class MessageController {
 
         Optional<UserClickInfo> optionalUserClickInfo = messageService.getUserClickInfo(userClickInfo);
         if(optionalUserClickInfo.isPresent()){
-            return;
+            return false;
         }else {
             messageService.saveUserClickInfo(userClickInfo);
 
@@ -78,6 +78,8 @@ public class MessageController {
             userRank.setUserId(userClickInfo.getUserId());
             userRank.setUserTag(userClickInfo.getUserTag());
             increaseUserRank(userRank);
+
+            return true;
         }
     }
 
