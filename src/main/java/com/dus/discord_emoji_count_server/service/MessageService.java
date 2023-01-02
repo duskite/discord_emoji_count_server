@@ -143,12 +143,25 @@ public class MessageService {
     }
 
     /**
-     * 날짜별 유저 랭크 생성
+     * 날짜별 유저 랭크 리스트 생성
      * @param userClickInfos
      * @return
      */
     public List<UserRank> createDayUserRank(List<UserClickInfo> userClickInfos){
 
+        return createUserRanks(userClickInfos);
+    }
+
+    /**
+     * 메세지별 유저 랭크 리스트 생성
+     * @param userClickInfos
+     * @return
+     */
+    public List<UserRank> createUserRankByMessageID(List<UserClickInfo> userClickInfos){
+        return createUserRanks(userClickInfos);
+    }
+
+    public List<UserRank> createUserRanks(List<UserClickInfo> userClickInfos){
         Map<String, Long> map = new HashMap<>();
         for(UserClickInfo userClickInfo: userClickInfos){
             String userTag = userClickInfo.getUserTag();
@@ -283,6 +296,5 @@ public class MessageService {
     public void saveFirstClicked(FirstClicked firstClicked){
         messageRepository.save(firstClicked);
     }
-
 
 }

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class MessageRepository {
@@ -49,6 +48,7 @@ public class MessageRepository {
 
         return userRank.stream().findAny();
     }
+
     /**
      * 유저 랭크 저장
      * @param userRank
@@ -163,4 +163,6 @@ public class MessageRepository {
 
         return result.stream().findAny();
     }
+
+
 }

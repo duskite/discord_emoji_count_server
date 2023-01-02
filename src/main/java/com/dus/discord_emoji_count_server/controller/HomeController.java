@@ -57,7 +57,10 @@ public class HomeController {
         model.addAttribute("userClickInfos", userClickInfos);
         model.addAttribute("length", userClickInfos.size());
 
-        return "list/listByUserId";
+        List<UserRank> userRanks = messageService.createUserRankByMessageID(userClickInfos);
+        model.addAttribute("userRanks", userRanks);
+
+        return "list/listByMessageId";
     }
 
     @GetMapping("/board")

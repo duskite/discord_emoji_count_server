@@ -12,10 +12,10 @@
             </header>
             <ul>
                 <li>
-                    <a href="/allList">모든 클릭 정보</a>
+                    <a href="/allList">모든 클릭 정보(전체 기간)</a>
                 </li>
                 <li>
-                    <a href="/board">이모지 카운팅 취합</a>
+                    <a href="/board">모든 이모지 카운팅(전체 기간)</a>
                 </li>
                 <li>
                     <form action="/listByUserId" method="get">
@@ -43,7 +43,7 @@
                 <li>
                     <form action="/listByDay" method="get">
                         <div class="form-group">
-                            <label for="clickDate">날짜별로 검색</label>
+                            <label for="clickDate">날짜 별로 검색</label>
                             <input type="date" id="clickDate" name="clickDate" placeholder="날짜별">
                             <button type="submit">검색</button>
                         </div>
@@ -52,5 +52,6 @@
             </ul>
         </nav>
     </div>
+    <a href="#sidebar" class="toggle"></a>
 </div>
 </html>

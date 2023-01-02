@@ -2,12 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>메세지ID로 클릭 내여 조회</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>메세지ID로 클릭 내역 조회</title>
     <!-- css import   -->
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <!--  end  -->
 </head>
-<body>
+<body class="is-preload">
 
 <div id="wrapper">
     <div id="main">
@@ -39,10 +40,34 @@
                             </tbody>
                         </table>
                     </article>
+                    <article>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>유저 Tag</th>
+                                <th>이모지 카운팅</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="userRank : ${userRanks}">
+                                <td th:text="${userRank.userTag}"></td>
+                                <td th:text="${userRank.clickCnt}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </article>
                 </div>
             </section>
         </div>
     </div>
+
+    <!-- sidebar frag    -->
+    <div th:replace="fragments/fragSidebar.html :: frag_banner"></div>
+    <!-- end   -->
 </div>
+
+<!-- script frag -->
+<div th:replace="fragments/fragScript.html :: frag_script"></div>
+<!-- end   -->
 </body>
 </html>

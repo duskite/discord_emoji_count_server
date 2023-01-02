@@ -2,12 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>모든 클릭 내역 조회</title>
     <!-- css import   -->
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <!--  end  -->
 </head>
-<body>
+<body class="is-preload">
 <div id="wrapper">
     <div id="main">
         <div class="inner">
@@ -42,9 +43,16 @@
             </section>
         </div>
     </div>
-</div>
-    </div>
 
+
+    <!-- sidebar frag    -->
+    <div th:replace="fragments/fragSidebar.html :: frag_banner"></div>
+    <!-- end   -->
+</div>
+
+<!-- script frag -->
+<div th:replace="fragments/fragScript.html :: frag_script"></div>
+<!-- end   -->
 </body>
 </html>
 
