@@ -64,9 +64,9 @@ public class MessageController {
             userClickInfo.setClickDate(optionalFirstClicked.get().getFirstClickDate());
         }else {
             userClickInfo.setClickDate(getClickTime());
+            setFirstClicked(userClickInfo);
         }
 
-        setFirstClicked(userClickInfo);
 
         Optional<UserClickInfo> optionalUserClickInfo = messageService.getUserClickInfo(userClickInfo);
         if(optionalUserClickInfo.isPresent()){
