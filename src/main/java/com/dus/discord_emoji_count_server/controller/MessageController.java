@@ -83,6 +83,11 @@ public class MessageController {
         }
     }
 
+    @DeleteMapping("/deleteMessageId/{messageId}")
+    public void deleteMessageId(@PathVariable("messageId") String messageId){
+        messageService.deleteMessageId(messageId);
+    }
+
     public void setFirstClicked(UserClickInfo userClickInfo){
         FirstClicked firstClicked = new FirstClicked();
         firstClicked.setUserId(userClickInfo.getUserId());

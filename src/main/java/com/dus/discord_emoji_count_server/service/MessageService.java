@@ -36,6 +36,10 @@ public class MessageService {
         messageRepository.save(messageInfo);
     }
 
+    public void deleteMessageId(String messageId){
+        messageRepository.delete(messageId);
+    }
+
     /**
      * 카운팅 해야하는 모든 메세지 정보 가져옴
      * @return

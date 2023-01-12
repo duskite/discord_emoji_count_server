@@ -97,6 +97,15 @@ public class MessageRepository {
         em.persist(userClickInfo);
     }
 
+    public void delete(String messageId){
+        List<MessageInfo> resultList = em.createQuery("select m from MessageInfo m where m.messageId=:messageId", MessageInfo.class)
+                .setParameter("messageId", messageId)
+                .getResultList();
+
+        Optional<MessageInfo> optionalMessageInfo = resultList.stream().findAny();
+        em.remove(optionalMessageInfo.get());
+    }
+
     /**
      * 클릭 정보를 삭제함
      * @param messageId
